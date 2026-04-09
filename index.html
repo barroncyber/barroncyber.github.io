@@ -12,7 +12,7 @@
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: #0a0f1c url('https://www.transparenttextures.com/patterns/circuit-board.png');
+      background: #0a0f1c;
       color: #e6edf3;
       scroll-behavior: smooth;
     }
@@ -241,7 +241,7 @@ let particles = [];
 
 function initParticles() {
   particles = [];
-  for (let i = 0; i < 80; i++) {
+  for (let i = 0; i < 90; i++) {
     particles.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
@@ -257,7 +257,7 @@ initParticles();
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  ctx.fillStyle = "rgba(88,166,255,0.5)";
+  ctx.fillStyle = "rgba(96,188,255,0.6)";
 
   particles.forEach(p => {
     p.x += p.dx;
