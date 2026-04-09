@@ -241,11 +241,11 @@ let particles = [];
 
 function initParticles() {
   particles = [];
-  for (let i = 0; i < 90; i++) {
+  for (let i = 0; i < 150; i++) {
     particles.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      radius: Math.random() * 1.5 + 0.5,
+      radius: Math.random() * 1.6 + 0.5,
       dx: (Math.random() - 0.5) * 0.2,
       dy: (Math.random() - 0.5) * 0.2
     });
@@ -257,7 +257,7 @@ initParticles();
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  ctx.fillStyle = "rgba(96,188,255,0.6)";
+  ctx.fillStyle = "rgba(104,200,255,0.75)";
 
   particles.forEach(p => {
     p.x += p.dx;
