@@ -130,6 +130,78 @@
       color: #38bdf8;
       text-shadow: 0 0 6px rgba(56,189,248,0.8);
     }
+
+    /* Active nav link */
+    nav a.active {
+      color: #38bdf8;
+      text-shadow: 0 0 8px rgba(56,189,248,0.8);
+      border-bottom: 2px solid #38bdf8;
+      padding-bottom: 2px;
+    }
+
+    /* Category tags */
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin: 10px 0 6px;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 20px;
+      border: 1px solid rgba(88,166,255,0.4);
+      color: #58a6ff;
+      background: rgba(88,166,255,0.08);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .tag:hover, .tag.active-tag {
+      background: rgba(88,166,255,0.22);
+      border-color: #58a6ff;
+      box-shadow: 0 0 6px rgba(88,166,255,0.3);
+    }
+
+    /* Filter bar */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin: 0 auto 30px;
+      max-width: 600px;
+    }
+
+    .filter-btn {
+      font-size: 0.7rem;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(88,166,255,0.4);
+      color: #58a6ff;
+      background: transparent;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .filter-btn:hover, .filter-btn.active-filter {
+      background: rgba(88,166,255,0.18);
+      border-color: #58a6ff;
+      box-shadow: 0 0 8px rgba(88,166,255,0.3);
+      color: #38bdf8;
+    }
+
+    .card.hidden {
+      display: none;
+    }
   </style>
 </head>
 
@@ -146,9 +218,19 @@
 <section id="home">
   <h1>Write-Ups</h1>
   <p>A collection of write-ups from various cyber competitions I've participated in.</p>
+
+<div class="filter-bar">
+  <button class="filter-btn  active-filter" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="ctf">CTF</button>
+  <button class="filter-btn" data-filter="web">Web</button>
+  <button class="filter-btn" data-filter="forensics">Forensics</button>
+  <button class="filter-btn" data-filter="binary">Binary</button>
+  <button class="filter-btn" data-filter="crypto">Crypto</button>
+</div>
     
   <div class="card">
       <span class="card-date">MM/DD/YYYY</span>
+      <div class="card-tags"><span class="tag" data-tag="ctf">CTF</span><span class="tag" data-tag="web">Web</span></div>
     <h3>Write-Up Name</h3>
     <p>Short description.</p>
     <a class="button" href="#">View Write-Up</a>
@@ -156,6 +238,7 @@
 
   <div class="card">
       <span class="card-date">MM/DD/YYYY</span>
+      <div class="card-tags"><span class="tag" data-tag="ctf">CTF</span><span class="tag" data-tag="crypto">Crypto</span></div>
     <h3>Write-Up Name</h3>
     <p>Short description.</p>
     <a class="button" href="#">View Write-Up</a>
@@ -163,11 +246,40 @@
 
   <div class="card">
       <span class="card-date">MM/DD/YYYY</span>
+      <div class="card-tags"><span class="tag" data-tag="ctf">CTF</span><span class="tag" data-tag="forensics">Forensics</span></div>
     <h3>Write-Up Name</h3>
     <p>Short description.</p>
     <a class="button" href="#">View Write-Up</a>
   </div>
 
 </section>
+
+<script>
+  // Active nav highlight
+  const currentPage = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('nav a').forEach(a => {
+    if (a.getAttribute('href') === currentPage) a.classList.add('active');
+  });
+
+  // Tag filtering
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active-filter'));
+      btn.classList.add('active-filter');
+
+      document.querySelectorAll('.card').forEach(card => {
+        if (filter === 'all') {
+          card.classList.remove('hidden');
+        } else {
+          const tags = Array.from(card.querySelectorAll('.tag')).map(t => t.dataset.tag);
+          card.classList.toggle('hidden', !tags.includes(filter));
+        }
+      });
+    });
+  });
+</script>
+
 </body>
 </html>
